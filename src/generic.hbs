@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{status}}</title>
+
+    <style>
+        body {
+            max-width: 36em;
+            margin: 0 auto;
+            padding: 0.5rem 1rem;
+            font-family: sans-serif;
+            font-size: 14pt;
+        }
+
+        .status-code {
+            margin: 0;
+            font-size: 18rem;
+            font-weight: bold;
+            position: absolute;
+            opacity: 0.1;
+            top: -2rem;
+            left: 0;
+            z-index: -1;
+        }
+
+        main {
+            position: relative;
+            padding: 4rem 0 2rem;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <p class="status-code">{{status_code}}</p>
+
+    <h1>{{status_text}}</h1>
+
+    {{#if body}}
+        <p>{{body}}</p>
+    {{else}}
+        <p>This site is temporarily unavailable; please check back later. Sorry
+            for the inconvenience.</p>
+    {{/if}}
+</main>
+
+</body>
+</html>

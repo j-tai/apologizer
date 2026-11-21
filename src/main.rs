@@ -2,6 +2,7 @@ mod config;
 mod service;
 
 use crate::config::load_config;
+use crate::service::prepare_response;
 use axum::handler::HandlerWithoutStateExt;
 use std::net::Ipv4Addr;
 use std::sync::Arc;
@@ -36,16 +37,17 @@ async fn main() {
     trace!("Logging set up.");
 
     let config = load_config("apologizer.toml".as_ref()).await;
+    let config = Arc::new(config);
 
     let listener = TcpListener::bind((Ipv4Addr::new(127, 0, 0, 1), config.port))
         .await
         .unwrap();
     info!("Listening on port {}.", config.port);
-    
-    let config = Arc::new(config);
+
+    let response = prepare_response(&config);
     axum::serve(
         listener,
-        (move |req| service::handle(config, req)).into_make_service(),
+        (move |req| service::handle(config, response.clone(), req)).into_make_service(),
     )
     .await
     .unwrap();

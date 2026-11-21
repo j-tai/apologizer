@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::path::Path;
 
 #[derive(Debug, Deserialize)]
-#[serde(deny_unknown_fields)]
+#[serde(default, deny_unknown_fields)]
 pub struct Config {
     pub port: u16,
     pub status: u16,
